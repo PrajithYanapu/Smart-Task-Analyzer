@@ -1,53 +1,295 @@
-# Smart Task Analyzer
+# ⚡ Smart Task Analyzer
 
-## Overview
-Mini-application that scores and prioritizes tasks using urgency, importance, effort, and dependencies. Backend: Django + DRF. Frontend: simple HTML/CSS/JS that consumes API.
+A modern, intelligent task‑prioritization system built with **Django (Backend)** and **Vanilla JS + Vis.js (Frontend)**.  
+This tool analyzes tasks, dependencies, urgency, importance, and time estimates to generate a **data‑driven priority score**.  
+It also provides a **dependency graph**, **Eisenhower Matrix**, and **AI‑Learning feedback loop**.
 
+---
 
+## 🚀 Features
 
-## Project structure
-(see file tree in repository)
+### ✅ Core Features
+- Add tasks with:
+  - Title  
+  - Due date  
+  - Estimated hours  
+  - Importance score  
+  - Dependencies  
+- Bulk JSON task input  
+- Multiple priority strategies  
+  - **Smart Balance**  
+  - **Fastest First**  
+  - **High Impact**  
+  - **Deadline Driven**  
+- Detailed score reasoning  
+- Color‑coded priority levels  
+- Fully responsive modern UI  
+- Dark mode toggle  
 
-## Setup (local)
-1. Ensure Python 3.8+ installed.
-2. Create virtualenv:
-3. Install dependencies:
-4. Run migrations:
-(No models required — but migration creates DB)
-5. Start Django development server:
-6. Open frontend:
-- Serve `frontend/` files. For quick local testing, open `backend/task_analyzer/urls.py` to add static serving or just open `frontend/index.html` in the browser and set `API_BASE` to `http://127.0.0.1:3000/api/tasks/` in `script.js`.
-- For convenience, you can copy `frontend/` into a simple static server dir.
+---
 
-## API Endpoints
-- `POST /api/tasks/analyze/`
-- Body: `{ "tasks": [ ... ], "weights": {urgency:..,..} , "strategy": "smart|fastest|impact|deadline" }`
-- Returns: sorted tasks with `score` and `reason`. Includes `cycles` if circular dependencies detected.
+## 📊 Advanced Features
+### 🔵 Dependency Graph (Vis.js)
+Visualizes tasks as nodes and dependency relationships as arrows.
 
-- `GET /api/tasks/suggest/?tasks=<json>&strategy=...`
-- Returns top 3 suggestions for today with explanations.
+### 🔵 Eisenhower Matrix (Urgency × Importance)
+Auto‑assigns tasks into:
+- **Do First**
+- **Schedule**
+- **Delegate**
+- **Eliminate**
 
-## Algorithm Explanation (300-500 words)
-The scoring algorithm calculates a normalized priority score by combining four components: urgency, importance, effort, and dependencies. Urgency is derived from how close the due date is; tasks past their due date receive a large urgency boost to ensure they surface quickly. Importance uses the user-specified 1–10 scale. Effort favors low estimated_hours, treating quick tasks as "quick wins" (effort component uses the inverse of estimated hours). Dependencies are scored by counting how many other tasks depend on a given task — tasks blocking many others receive a higher dependency score.
+### 🔵 AI Learning (User Feedback)
+Users can mark suggestions as:
+- 👍 Helpful  
+- 👎 Not Helpful  
 
-To combine these heterogeneous measures, each component is normalized across the task batch (min-max normalization) to a 0–1 range. The normalized components are weighted and summed. Default weights are: urgency 0.35, importance 0.35, effort 0.15, dependencies 0.15. The system supports preset strategies (Fastest Wins, High Impact, Deadline Driven, Smart Balance) that overwrite weights to match each strategy’s intent. We also accept custom weights in API requests.
+The backend learns from feedback and adjusts scoring weights.
 
-Edge cases: no due date tasks are treated with neutral urgency. Past-due tasks receive a ramped urgency so the older the overdue, the higher the urgency. Invalid or missing fields are validated, with defaults (importance=5, estimated_hours=1). Circular dependencies are detected using DFS; when found the API reports cycles to the client and includes the cycles in the response for user correction.
+### 🔵 Date Intelligence
+- Urgency considers weekends and holidays  
+- Overdue tasks gain high urgency weight  
 
-Trade-offs: Min-max normalization makes scores relative to the current batch (meaning absolute score values vary by batch). This design helps prioritize within the current task set; for global/long-term ranking one could add historical scaling. Another trade-off is using a simple count of dependents rather than a full centrality metric — count is simpler and faster, and suits the assignment scope. Future improvements include date intelligence (skip weekends/holidays), a learning system to adjust weights from user feedback, and a graph visualization for dependencies.
+---
 
-## Tests
-Run tests with:
+## 🧠 Priority Scoring Factors
 
-## Time breakdown
-- Algorithm & scoring core: ~1.5 hours
-- Backend endpoints & validation: ~1 hour
-- Frontend UI & interactions: ~1 hour
-- Tests & README: ~0.5 hour
+| Factor | Description |
+|--------|------------|
+| **Deadline** | Days left / overdue impact |
+| **Importance** | User‑defined priority |
+| **Estimated Hours** | Time‑effort normalization |
+| **Dependencies** | Chain depth + blocking tasks |
+| **Strategy Modifier** | Chooses algorithm behavior |
 
-## Future Improvements
-- Persist tasks in DB with user sessions
-- Dependency graph visualization and auto-fix suggestions
-- Consider business days only for urgency
-- Machine learning to adapt weights from user feedback
+---
 
+## 🛠️ Tech Stack
+
+### **Backend**
+- Python  
+- Django REST Framework  
+- CORS Headers  
+- Dateutil  
+
+### **Frontend**
+- Vanilla JavaScript  
+- Vis.js dependency graph  
+- HTML + CSS (glass‑morphism UI)  
+
+## 🔥 API Endpoints
+
+### **POST /api/tasks/analyze/**
+Analyze tasks and return:
+- Sorted tasks
+- Scores
+- Explanations
+- Cycle detection
+
+### **GET /api/tasks/suggest/**
+Returns **Top 3 tasks** based on chosen strategy.
+
+### **POST /api/tasks/graph/**
+Returns nodes + edges for dependency visualization.
+
+### **POST /api/tasks/feedback/**
+Stores user feedback to improve scoring.
+
+---
+
+## 🖥️ Running the Project
+
+### 1️⃣ Backend (Django)
+```
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+Backend will start at:
+```
+http://127.0.0.1:8000/
+```
+
+### 2️⃣ Frontend
+Use VS Code Live Server or run:
+
+```
+cd frontend
+python -m http.server 3000
+```
+
+Frontend runs at:
+```
+http://127.0.0.1:3000/index.html
+```
+
+---
+
+## 🧪 Running Unit Tests
+Contains scoring logic tests:
+
+```
+python manage.py test
+```
+
+---
+
+## 📸 Screenshots (Add yours)
+```
+📌 Dashboard
+📌 Dependency Graph
+📌 Suggestions UI
+📌 Dark Mode View
+```
+# ⚡ Smart Task Analyzer
+
+A modern, intelligent task‑prioritization system built with **Django (Backend)** and **Vanilla JS + Vis.js (Frontend)**.  
+This tool analyzes tasks, dependencies, urgency, importance, and time estimates to generate a **data‑driven priority score**.  
+It also provides a **dependency graph**, **Eisenhower Matrix**, and **AI‑Learning feedback loop**.
+
+---
+
+## 🚀 Features
+
+### ✅ Core Features
+- Add tasks with:
+  - Title  
+  - Due date  
+  - Estimated hours  
+  - Importance score  
+  - Dependencies  
+- Bulk JSON task input  
+- Multiple priority strategies  
+  - **Smart Balance**  
+  - **Fastest First**  
+  - **High Impact**  
+  - **Deadline Driven**  
+- Detailed score reasoning  
+- Color‑coded priority levels  
+- Fully responsive modern UI  
+- Dark mode toggle  
+
+---
+
+## 📊 Advanced Features
+### 🔵 Dependency Graph (Vis.js)
+Visualizes tasks as nodes and dependency relationships as arrows.
+
+### 🔵 Eisenhower Matrix (Urgency × Importance)
+Auto‑assigns tasks into:
+- **Do First**
+- **Schedule**
+- **Delegate**
+- **Eliminate**
+
+### 🔵 AI Learning (User Feedback)
+Users can mark suggestions as:
+- 👍 Helpful  
+- 👎 Not Helpful  
+
+The backend learns from feedback and adjusts scoring weights.
+
+### 🔵 Date Intelligence
+- Urgency considers weekends and holidays  
+- Overdue tasks gain high urgency weight  
+
+---
+
+## 🧠 Priority Scoring Factors
+
+| Factor | Description |
+|--------|------------|
+| **Deadline** | Days left / overdue impact |
+| **Importance** | User‑defined priority |
+| **Estimated Hours** | Time‑effort normalization |
+| **Dependencies** | Chain depth + blocking tasks |
+| **Strategy Modifier** | Chooses algorithm behavior |
+
+---
+
+## 🛠️ Tech Stack
+
+### **Backend**
+- Python  
+- Django REST Framework  
+- CORS Headers  
+- Dateutil  
+
+### **Frontend**
+- Vanilla JavaScript  
+- Vis.js dependency graph  
+- HTML + CSS (glass‑morphism UI)  
+
+## 🔥 API Endpoints
+
+### **POST /api/tasks/analyze/**
+Analyze tasks and return:
+- Sorted tasks
+- Scores
+- Explanations
+- Cycle detection
+
+### **GET /api/tasks/suggest/**
+Returns **Top 3 tasks** based on chosen strategy.
+
+### **POST /api/tasks/graph/**
+Returns nodes + edges for dependency visualization.
+
+### **POST /api/tasks/feedback/**
+Stores user feedback to improve scoring.
+
+---
+
+## 🖥️ Running the Project
+
+### 1️⃣ Backend (Django)
+```
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+Backend will start at:
+```
+http://127.0.0.1:8000/
+```
+
+### 2️⃣ Frontend
+Use VS Code Live Server or run:
+
+```
+cd frontend
+python -m http.server 3000
+```
+
+Frontend runs at:
+```
+http://127.0.0.1:3000/index.html
+```
+
+---
+
+## 🧪 Running Unit Tests
+Contains scoring logic tests:
+
+```
+python manage.py test
+```
+
+---
+
+## 📸 Screenshots (Add yours)
+```
+📌 Dashboard
+📌 Dependency Graph
+📌 Suggestions UI
+📌 Dark Mode View
+```
+<img width="444" height="897" alt="image" src="https://github.com/user-attachments/assets/d9d2e631-69e2-42fa-bd56-0ca1bfeb3281" />

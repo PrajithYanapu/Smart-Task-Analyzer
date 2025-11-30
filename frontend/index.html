@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Smart Task Analyzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <!-- DARK MODE TOGGLE -->
+    <div class="dark-toggle">
+        <button id="dark-mode-btn">🌙</button>
+    </div>
+
+    <div class="container">
+        <h1 class="title">Smart Task Analyzer</h1>
+
+        <!-- FEEDBACK -->
+        <p id="feedback" class="feedback"></p>
+
+        <!-- INPUT SECTION -->
+        <section class="card">
+            <h2>Add Task</h2>
+            <form id="task-form">
+                <div class="row">
+                    <input type="text" id="title" placeholder="Task title" required />
+                </div>
+
+                <div class="row">
+                    <input type="date" id="due_date" />
+                    <input type="number" id="estimated_hours" placeholder="Hours" min="1" />
+                    <input type="number" id="importance" placeholder="Importance (1–10)" min="1" max="10" />
+                </div>
+
+                <div class="row">
+                    <input type="text" id="dependencies" placeholder="Dependencies (comma separated IDs)" />
+                </div>
+
+                <button class="btn primary" type="submit">Add Task</button>
+            </form>
+        </section>
+        <section class="card">
+    <h2>Dependency Graph</h2>
+    <div id="graph-container"></div>
+</section>
+
+<!-- Load Vis.js -->
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+
+        <!-- BULK INPUT -->
+        <section class="card">
+            <h2>Bulk Task Input (JSON)</h2>
+            <textarea id="bulk-input" placeholder='[{"id":"1","title":"Example"}]'></textarea>
+        </section>
+
+        <!-- STRATEGY & BUTTONS -->
+        <section class="card">
+            <h2>Choose Strategy</h2>
+            <select id="strategy">
+                <option value="smart">Smart Balance</option>
+                <option value="fastest">Fastest Wins</option>
+                <option value="impact">High Impact</option>
+                <option value="deadline">Deadline Driven</option>
+            </select>
+
+            <div class="button-row">
+                <button id="analyze-btn" class="btn analyze">Analyze Tasks</button>
+                <button id="suggest-btn" class="btn suggest">Top 3 Suggestions</button>
+            </div>
+
+            <div class="button-row">
+                <button id="graph-btn" class="btn graph big-btn"> Show Dependency Graph</button>
+            </div>
+            
+        </section>
+        <section class="card">
+    <h2>Dependency Graph</h2>
+    <div id="graph-container"></div>
+</section>
+
+<!-- Load Vis.js -->
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+
+        <!-- RESULTS -->
+        <section id="results" class="card results"></section>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

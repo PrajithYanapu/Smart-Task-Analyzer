@@ -1,0 +1,243 @@
+/* 
+   Root Variables
+*/
+:root {
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --text: #222;
+    --subtext: #555;
+    --primary: #5865f2;
+    --primary-hover: #4752c4;
+    --border: #e1e1e1;
+    --radius: 14px;
+    --transition: 0.25s ease;
+}
+
+/* Dark Mode */
+.dark {
+    --bg: #0f1117;
+    --card-bg: #1a1d24;
+    --text: #eaeaea;
+    --subtext: #b6b6b6;
+    --border: #333;
+}
+
+
+/* 
+   Global
+ */
+body {
+    background: var(--bg);
+    margin: 0;
+    padding: 20px;
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+    transition: background var(--transition), color var(--transition);
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+
+/* 
+   Header (Title + Button)
+ */
+.header-row {
+    display: flex;
+    justify-content: space-between;  /* Title left, button right */
+    align-items: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Dark/Light Toggle Button */
+#dark-mode-btn {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+#dark-mode-btn:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+
+/* 
+   Cards
+ */
+.card {
+    background: var(--card-bg);
+    padding: 22px;
+    margin-bottom: 25px;
+    border-radius: var(--radius);
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    transition: background var(--transition), border var(--transition);
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+
+/* 
+   Inputs
+ */
+.row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    transition: border var(--transition), background var(--transition);
+    font-size: 15px;
+}
+
+textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary);
+}
+
+
+/* 
+   Buttons
+ */
+.btn {
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.2s, background var(--transition);
+}
+
+.btn:active {
+    transform: scale(0.92);
+}
+
+.analyze {
+    background: #00c27a;
+    color: white;
+}
+.analyze:hover {
+    background: #00a96c;
+}
+
+.suggest {
+    background: #ffb200;
+    color: #000;
+}
+.suggest:hover {
+    background: #e09b00;
+}
+
+.graph {
+    background: #4a89ff;
+    color: #fff;
+}
+.graph:hover {
+    background: #3a6fd6;
+}
+
+.big-btn {
+    width: 100%;
+}
+
+.button-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 12px;
+}
+
+
+/* 
+   Graph Container
+ */
+#graph-container {
+    height: 350px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card-bg);
+}
+
+/* Space between cards */
+.card + .card {
+    margin-top: 28px;
+}
+
+
+/* 
+   Smooth transitions
+ */
+body, .card, input, textarea, select, #graph-container {
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+
+/* 
+   Responsive
+ */
+@media (max-width: 600px) {
+
+    .header-row {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 26px;
+    }
+
+    #dark-mode-btn {
+        width: 100%;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .btn, .big-btn {
+        width: 100%;
+    }
+}
